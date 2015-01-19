@@ -49,7 +49,6 @@ LLElement * LLInsertAtEnd(LLElement * first, int key) {
         prossimo->next=temp;
     }
     return first;
-    return NULL;
 }
 
 /*
@@ -156,6 +155,22 @@ LLElement * LLRemoveLast(LLElement * first) {
  */
 LLElement * LLRemoveAtPosition(LLElement * first, int position) {
   
+    //LLElement * temp;
+    LLElement * riallaccia;
+    LLElement ** scorri_puntatori;
+    int i=0;
+    
+    
+    scorri_puntatori=&first;
+    
+    while(i<=position){
+        scorri_puntatori= &((*scorri_puntatori)->next);
+        i++;
+    }
+    riallaccia= (*scorri_puntatori)->next;
+    free(*scorri_puntatori);
+    *scorri_puntatori=riallaccia;
+    
     return first;
 }
 
