@@ -106,14 +106,18 @@ int LLFindKey(LLElement * first, int key, int startPosition) {
  * Returns the updated pointer to the first element of the list.
  */
 LLElement * LLRemoveFirst(LLElement * first) {
+    
+    
     LLElement * prossimo;
-    if(first==NULL){
-        fprintf(stderr,"La lista non contiene elementi");
-        exit(-1);
+    
+    
+    if(first!=NULL){
+        
+         prossimo=first->next;
+         free(first);
+         first=prossimo; 
+         
     }
-    prossimo=first->next;
-    free(first);
-    first=prossimo;
     
     return first;
 }
@@ -123,22 +127,23 @@ LLElement * LLRemoveFirst(LLElement * first) {
  * Returns the updated pointer to the first element of the list.
  */
 LLElement * LLRemoveLast(LLElement * first) {
-    LLElement * prossimo;
-    LLElement * temp;
-     if(first==NULL){
-        fprintf(stderr,"La lista non contiene elementi");
-        exit(-1);
-    }
-    prossimo=first;
-    temp=first;
-    while(prossimo->next!=NULL){
-        temp=prossimo;
-        prossimo=prossimo->next;
-    }
-    temp=prossimo;
-    free(prossimo);
-    temp=NULL;
     
+    LLElement ** scorri_puntatori;
+    
+    
+     if(first!=NULL){
+         
+        scorri_puntatori=&first;
+        
+        while((*scorri_puntatori)->next!=NULL){
+            
+            scorri_puntatori = &(*scorri_puntatori)->next;
+        }
+        free(*scorri_puntatori);
+        *scorri_puntatori=NULL;
+
+    }
+
     return first;
 }
 
@@ -150,8 +155,8 @@ LLElement * LLRemoveLast(LLElement * first) {
  * Returns the updated pointer to the first element of the list.
  */
 LLElement * LLRemoveAtPosition(LLElement * first, int position) {
-    // TODO To be implemented
-    return NULL;
+  
+    return first;
 }
 
 
