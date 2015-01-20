@@ -163,7 +163,7 @@ LLElement * LLRemoveAtPosition(LLElement * first, int position) {
     
     scorri_puntatori=&first;
     
-    while(i<=position){
+    while(i<position){
         scorri_puntatori= &((*scorri_puntatori)->next);
         i++;
     }
