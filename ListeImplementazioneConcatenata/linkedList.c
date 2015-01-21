@@ -7,21 +7,15 @@
  * Returns the updated pointer to the first element of the list.
  */
 LLElement * LLInsertAtBeginning(LLElement * first, int key) {
-    
-    if(first==NULL){
-        first=(LLElement *)malloc(sizeof(LLElement));
-        first->key=key;
-        first->next=NULL;
-    }
-    
-    else{
-        
+      
         LLElement * temp;
         temp=(LLElement *)malloc(sizeof(LLElement));
+        
+        if(temp!=NULL){
         temp->key=key;
         temp->next=first;
         first=temp;
-    }
+        }
     
     return first;
 }
@@ -34,9 +28,11 @@ LLElement * LLInsertAtEnd(LLElement * first, int key) {
     
     LLElement * prossimo=NULL;
     LLElement * temp;
+    
     if(first==NULL){
         first=(LLElement *)malloc(sizeof(LLElement));
         first->key=key;
+        first->next=NULL;
     }
     else{
         prossimo=first;
@@ -59,8 +55,31 @@ LLElement * LLInsertAtEnd(LLElement * first, int key) {
  * Returns the updated pointer to the first element of the list.
  */
 LLElement * LLInsertAtPosition(LLElement * first, int key, int position) {
-    // TODO To be implemented
-    return NULL;
+  
+    int dimensionemax;
+    LLElement * temp=NULL;
+    LLElement ** scorri_puntatori;
+    int i=0;
+
+    if((LLSize(first)+1) >= position){
+        
+        scorri_puntatori=&first;
+        while(i<position){
+            scorri_puntatori= &((*scorri_puntatori)->next);
+            i++;
+        }
+        temp=(LLElement*)malloc(sizeof(LLElement));
+        temp->key=key;
+
+        if(temp==NULL){
+            fprintf(stderr,"Non ho abbastanza memoria ALLOCAZIONE FALLITA");
+            return(first);
+        }
+        temp->next=*scorri_puntatori;
+        *scorri_puntatori=temp;
+     
+    }
+    return first;
 }
 
 /*
@@ -83,9 +102,11 @@ int LLGetKey(LLElement * first, int position) {
 
     int i,key;
     if(first==NULL) return -1;
-    for(i=0;i<=position;i++){
+    i=0;
+    while(i<=position){
         key=first->key;
         first=first->next;
+        i++;
     }
     return key;
 }
@@ -96,14 +117,32 @@ int LLGetKey(LLElement * first, int position) {
  * Returns -1 if not found. 
  */ 
 int LLFindKey(LLElement * first, int key, int startPosition) {
-    // TODO To be implemented
-    return -1;
+    
+    int i=0;
+    
+    while(i<startPosition){
+        
+        first=first->next;
+        i++;
+        
+    }
+    
+    while(first->key!=key){
+        
+        first=first->next;
+        i++;
+        
+    }
+    
+    
+        return i;
 }
 
 /*
  * Remove the first element of the list.
  * Returns the updated pointer to the first element of the list.
  */
+
 LLElement * LLRemoveFirst(LLElement * first) {
     
     
