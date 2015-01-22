@@ -26,24 +26,23 @@ LLElement * LLInsertAtBeginning(LLElement * first, int key) {
  */
 LLElement * LLInsertAtEnd(LLElement * first, int key) {
     
-    LLElement * prossimo=NULL;
+    LLElement ** scorri_puntatori;
     LLElement * temp;
     
-    if(first==NULL){
-        first=(LLElement *)malloc(sizeof(LLElement));
-        first->key=key;
-        first->next=NULL;
+    scorri_puntatori=&first;
+    while(*scorri_puntatori!=NULL){
+        scorri_puntatori=&((*scorri_puntatori)->next);
     }
-    else{
-        prossimo=first;
-        while(prossimo->next!=NULL){
-            prossimo=prossimo->next;
-        }
-        temp=(LLElement *)malloc(sizeof(LLElement));
-        temp->key=key;
-        temp->next=NULL;
-        prossimo->next=temp;
+    temp=(LLElement*)malloc(sizeof(LLElement));
+    if(temp==NULL){
+        fprintf(stderr,"Non ho abbastanza memoria ALLOCAZIONE FALLITA\n");
+        return(first);
     }
+    temp->key=key;
+    temp->next=NULL;
+    *scorri_puntatori=temp;
+
+ 
     return first;
 }
 
@@ -61,20 +60,22 @@ LLElement * LLInsertAtPosition(LLElement * first, int key, int position) {
     LLElement ** scorri_puntatori;
     int i=0;
 
-    if((LLSize(first)+1) >= position){
+    if(((LLSize(first)) >= position) && (position>=0)){
         
         scorri_puntatori=&first;
         while(i<position){
             scorri_puntatori= &((*scorri_puntatori)->next);
             i++;
         }
+        
         temp=(LLElement*)malloc(sizeof(LLElement));
-        temp->key=key;
-
+        
         if(temp==NULL){
-            fprintf(stderr,"Non ho abbastanza memoria ALLOCAZIONE FALLITA");
+            fprintf(stderr,"Non ho abbastanza memoria ALLOCAZIONE FALLITA\n");
             return(first);
         }
+        
+        temp->key=key;
         temp->next=*scorri_puntatori;
         *scorri_puntatori=temp;
      
@@ -101,14 +102,16 @@ int LLSize(LLElement * first) {
 int LLGetKey(LLElement * first, int position) {
 
     int i,key;
-    if(first==NULL) return -1;
-    i=0;
-    while(i<=position){
-        key=first->key;
-        first=first->next;
-        i++;
+    if(first!=NULL){
+        i=0;
+        while(i<=position){
+            key=first->key;
+            first=first->next;
+            i++;
+        }
+        return key;
     }
-    return key;
+    else return -1;
 }
 
 /*
@@ -119,23 +122,25 @@ int LLGetKey(LLElement * first, int position) {
 int LLFindKey(LLElement * first, int key, int startPosition) {
     
     int i=0;
-    
-    while(i<startPosition){
-        
-        first=first->next;
-        i++;
-        
+    if(first!=NULL){
+        while((i<startPosition) && (first!=NULL)){
+
+            first=first->next;
+            i++;
+
+        }   
+        if(first!=NULL){
+            while((first->key!=key)  && (first!=NULL)){
+
+                first=first->next;
+                i++;
+
+            }
+        }
     }
     
-    while(first->key!=key){
-        
-        first=first->next;
-        i++;
-        
-    }
-    
-    
-        return i;
+    if(first==NULL)return -1;
+    else return i;
 }
 
 /*
@@ -194,7 +199,6 @@ LLElement * LLRemoveLast(LLElement * first) {
  */
 LLElement * LLRemoveAtPosition(LLElement * first, int position) {
   
-    //LLElement * temp;
     LLElement * riallaccia;
     LLElement ** scorri_puntatori;
     int i=0;
