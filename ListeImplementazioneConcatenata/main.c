@@ -1,3 +1,9 @@
+/*
+* File: main.c
+* Author: f.trotta
+*
+* Created on 28 dicembre 2014, 14.50
+*/
 #include <stdio.h>
 #include <stdlib.h>
 #include ".\linkedList.h"
@@ -71,6 +77,10 @@ list = LLInsertAtEnd(list, 10+i);
 assertSize(100, list, 10);
 for(i=0; i<10; i++)
 assertKey(101, list, i, 10+i);
+// Operazioni 110
+list = LLEmptyList(list); // always free the memory when the list is not
+// needed anymore
+assertSize(110, list, 0);
 puts("Ottimo lavoro! Sembra proprio che tutto funzioni correttamente.\n");
 return (EXIT_SUCCESS);
 }

@@ -217,6 +217,21 @@ LLElement * LLRemoveAtPosition(LLElement * first, int position) {
     return first;
 }
 
+/* Empties the list */
+LLElement * LLEmptyList(LLElement *first) {
+    
+    LLElement * cancella;
+    
+    while(first!=NULL){
+        
+        cancella=first;
+        first=first->next;
+        free(cancella);
+    }
+    
+    return NULL;
+}
+
 
 
 
