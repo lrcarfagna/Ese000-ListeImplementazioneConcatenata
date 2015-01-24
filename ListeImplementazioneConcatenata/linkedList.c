@@ -28,21 +28,16 @@ LLElement * LLInsertAtEnd(LLElement * first, int key) {
     
     LLElement ** scorri_puntatori;
     LLElement * temp;
-    
     scorri_puntatori=&first;
-    while(*scorri_puntatori!=NULL){
-        scorri_puntatori=&((*scorri_puntatori)->next);
-    }
     temp=(LLElement*)malloc(sizeof(LLElement));
-    if(temp==NULL){
-        fprintf(stderr,"Non ho abbastanza memoria ALLOCAZIONE FALLITA\n");
-        return(first);
+    if(temp!=NULL){
+        temp->key=key;
+        temp->next=NULL;
+        while(*scorri_puntatori!=NULL){
+            scorri_puntatori=&((*scorri_puntatori)->next);
+        }
+        *scorri_puntatori=temp;
     }
-    temp->key=key;
-    temp->next=NULL;
-    *scorri_puntatori=temp;
-
- 
     return first;
 }
 
@@ -56,29 +51,23 @@ LLElement * LLInsertAtEnd(LLElement * first, int key) {
 LLElement * LLInsertAtPosition(LLElement * first, int key, int position) {
   
     int dimensionemax;
-    LLElement * temp=NULL;
+    LLElement * temp;
     LLElement ** scorri_puntatori;
     int i=0;
 
     if(((LLSize(first)) >= position) && (position>=0)){
         
         scorri_puntatori=&first;
-        while(i<position){
-            scorri_puntatori= &((*scorri_puntatori)->next);
-            i++;
+        temp =(LLElement*)malloc(sizeof(LLElement));
+        if(temp!=NULL){
+            temp->key=key;
+            while(i<position){
+                scorri_puntatori= &((*scorri_puntatori)->next);
+                i++;
+            }
+            temp->next=*scorri_puntatori;
+            *scorri_puntatori=temp;
         }
-        
-        temp=(LLElement*)malloc(sizeof(LLElement));
-        
-        if(temp==NULL){
-            fprintf(stderr,"Non ho abbastanza memoria ALLOCAZIONE FALLITA\n");
-            return(first);
-        }
-        
-        temp->key=key;
-        temp->next=*scorri_puntatori;
-        *scorri_puntatori=temp;
-     
     }
     return first;
 }
@@ -229,7 +218,7 @@ LLElement * LLEmptyList(LLElement *first) {
         free(cancella);
     }
     
-    return NULL;
+    return first;
 }
 
 
