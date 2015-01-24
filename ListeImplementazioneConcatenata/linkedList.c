@@ -192,18 +192,20 @@ LLElement * LLRemoveAtPosition(LLElement * first, int position) {
     LLElement ** scorri_puntatori;
     int i=0;
     
-    
-    scorri_puntatori=&first;
-    
-    while(i<position){
-        scorri_puntatori= &((*scorri_puntatori)->next);
-        i++;
-    }
-    riallaccia= (*scorri_puntatori)->next;
-    free(*scorri_puntatori);
-    *scorri_puntatori=riallaccia;
-    
-    return first;
+    if((first!=NULL) && (LLSize(first) > position) && (position>=0)){
+        
+        scorri_puntatori=&first;
+        
+        while(i<position){
+            scorri_puntatori= &((*scorri_puntatori)->next);
+            i++;
+        }
+        riallaccia= (*scorri_puntatori)->next;
+        free(*scorri_puntatori);
+        *scorri_puntatori=riallaccia;
+
+        
+    }return first;
 }
 
 /* Empties the list */
