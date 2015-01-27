@@ -161,20 +161,18 @@ LLElement * LLRemoveFirst(LLElement * first) {
 LLElement * LLRemoveLast(LLElement * first) {
     
     LLElement ** scorri_puntatori;
+    LLElement ** temp; //
     
+    scorri_puntatori=&first;
+    temp=scorri_puntatori; //
     
-     if(first!=NULL){
-         
-        scorri_puntatori=&first;
+    while(*scorri_puntatori!=NULL){
+        temp=scorri_puntatori;  //
+        scorri_puntatori=&((*scorri_puntatori)->next);
         
-        while((*scorri_puntatori)->next!=NULL){
-            
-            scorri_puntatori = &(*scorri_puntatori)->next;
-        }
-        free(*scorri_puntatori);
-        *scorri_puntatori=NULL;
-
     }
+    free(*temp); //
+    *temp=NULL;  //
 
     return first;
 }
@@ -188,19 +186,20 @@ LLElement * LLRemoveLast(LLElement * first) {
  */
 LLElement * LLRemoveAtPosition(LLElement * first, int position) {
   
-    LLElement * riallaccia;
+    LLElement * riallaccia=NULL;
     LLElement ** scorri_puntatori;
     int i=0;
     
-    if((first!=NULL) && (LLSize(first) > position) && (position>=0)){
+    if((LLSize(first) > position) && (position>=0)){
         
         scorri_puntatori=&first;
         
-        while(i<position){
+        while(i<position && *scorri_puntatori!=NULL){
             scorri_puntatori= &((*scorri_puntatori)->next);
+            riallaccia= (*scorri_puntatori)->next;
             i++;
         }
-        riallaccia= (*scorri_puntatori)->next;
+        
         free(*scorri_puntatori);
         *scorri_puntatori=riallaccia;
 
@@ -222,7 +221,3 @@ LLElement * LLEmptyList(LLElement *first) {
     
     return first;
 }
-
-
-
-
