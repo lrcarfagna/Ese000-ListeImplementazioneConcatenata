@@ -91,6 +91,7 @@ int LLSize(LLElement * first) {
 int LLGetKey(LLElement * first, int position) {
 
     int i,key;
+    int returnValue=-1;
     if(first!=NULL){
         i=0;
         while(i<=position){
@@ -98,9 +99,9 @@ int LLGetKey(LLElement * first, int position) {
             first=first->next;
             i++;
         }
-        return key;
+        returnValue=key;
     }
-    else return -1;
+    return returnValue;
 }
 
 /*
@@ -110,7 +111,9 @@ int LLGetKey(LLElement * first, int position) {
  */ 
 int LLFindKey(LLElement * first, int key, int startPosition) {
     
+    int returnValue=-1;
     int i=0;
+    
     if(first!=NULL){
         while((i<startPosition) && (first!=NULL)){
 
@@ -128,8 +131,8 @@ int LLFindKey(LLElement * first, int key, int startPosition) {
         }
     }
     
-    if(first==NULL)return -1;
-    else return i;
+    if(first!=NULL) returnValue = i;
+    return returnValue;
 }
 
 /*
